@@ -27,10 +27,15 @@ function testFunction(first, second) {
   function insideFunction(second) {
     this.second = second;
   }
+
+  insideFunction.prototype = this;
+
   return new insideFunction(second);
 }
 
 testFunction.prototype.testProto = function () {
+  console.log('calling testProto');
+  console.log(this);
   console.log(this.first);
 }
 
@@ -43,6 +48,11 @@ var test2 = new testFunction('with_new', 2);
 console.log(test1.constructor.name);
 
 console.log(test2.constructor.name);
+
+test2.testProto();
+
+// not available
+// test1.testProto();
 
 console.log(test1);
 
